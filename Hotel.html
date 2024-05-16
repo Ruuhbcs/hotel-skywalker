@@ -63,6 +63,7 @@
 		}
 
 
+
 		function menuHospede() {
 			var opcao = parseInt(prompt("Selecione uma opção: 1. Cadastrar - 2. Pesquisar - 3. Listar - 4. Sair"));
 
@@ -75,7 +76,7 @@
 					break;
 				case 3:
 					listarHospedes();
-					break;
+					break;	
 				case 4:
 					alert("Até logo!");
 					break;
@@ -119,7 +120,6 @@
 
 		function reserva_quartos() {
 			alert('HOTEL {HOTEL SKYWALKER} - RESERVA DE QUARTOS');
-			inicio();
 			var quartos = Array(20).fill(false);
 			valorDiaria = parseFloat(prompt('Qual o valor padrão da diária?'));
 			var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
@@ -225,7 +225,7 @@
 				inicio();
 			}
 		}
-
+		
 		boasvindas();
 		inicio();
 	</script>
