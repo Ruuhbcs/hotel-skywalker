@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Hotel: funcionários</title>
+</head>
+
+<body>
+	<script>
+		var nome;
+		var hospedes = [];
+		var MAX_HOSPEDES = 15;
+		var quartosOcupados = []; // Adicionado para acompanhar os quartos ocupados
+		var gratuidades = 0;
+		var meias = 0;
+		var totalHospedagens = 0;
+		var valorDiaria; // Variável global para o valor padrão da diária
+
+		function boasvindas() {
+			alert('- BEM VINDO AO HOTEL SKYWALKER - Siga para fazer login.');
+			nome = String(prompt('Qual seu nome de usuário?'));
+			var senhaCerta = 2678;
+			var senhaDigitada = parseInt(prompt(nome + ' digite sua senha abaixo: '));
+
+			switch (senhaDigitada) {
+				case senhaCerta:
+					inicio();
+					break;
+
+				default:
+					alert('Senha incorreta! Tente novamente.');
+					boasvindas();
+					break;
+			}
+		}
+
+
+		function inicio() {
+			alert('Bem vindo ao Hotel Skywalker, ' + nome + ' é um prazer imenso ter você aqui!')
+			var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Abastecimento de Carros 5.) Sair'));
+
+			switch (escolha) {
+				case 1:
+					reserva_quartos();
+					break;
+				case 2:
+					menuHospede();
+				case 3:
+					cadastro_hospedes();
+					break;
+				case 4:
+					abastecer_carros();
+					break;
+				case 5:
+					sair();
+					break;
+				default:
+					erro();
+					break;
+			}
+		}
+
+
+		function menuHospede() {
+			var opcao = parseInt(prompt("Selecione uma opção: 1. Cadastrar - 2. Pesquisar - 3. Listar - 4. Sair"));
+
+			switch (opcao) {
+				case 1:
+					cadastrarHospede();
+					break;
+				case 2:
+					pesquisarHospede();
+					break;
+				case 3:
+					listarHospedes();
+					break;
+				case 4:
+					alert("Até logo!");
+					break;
+				default:
+					alert("Opção inválida. Por favor, selecione uma opção válida.");
+					menuHospede();
+			}
+		}
+
+		function cadastrarHospede() {
+			if (hospedes.length >= MAX_HOSPEDES) {
+				alert("Máximo de cadastros atingido.");
+				menuHospede();
+			} else {
+				cadastro_hospedes();
+			}
+		}
+
+		function pesquisarHospede() {
+			var nome = prompt("Qual o nome do hóspede?");
+			if (hospedes.includes(nome)) {
+				alert("Hóspede " + nome + " foi encontrado!");
+			} else {
+				alert("Hóspede " + nome + " não foi encontrado.");
+			}
+			menuHospede();
+		}
+
+		function listarHospedes() {
+			if (hospedes.length === 0) {
+				alert("Não há hóspedes cadastrados.");
+			} else {
+				var lista = "Hóspedes cadastrados:\n";
+				for (var i = 0; i < hospedes.length; i++) {
+					lista += (i + 1) + ". " + hospedes[i] + "\n";
+				}
+				alert(lista);
+			}
+			inicio();
+		}
+
+		function reserva_quartos() {
+			alert('HOTEL {HOTEL SKYWALKER} - RESERVA DE QUARTOS');
+			inicio();
+			var quartos = Array(20).fill(false);
+			valorDiaria = parseFloat(prompt('Qual o valor padrão da diária?'));
+			var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
+
+			if (valorDiaria <= 0 || diaria <= 0 || diaria > 30 || isNaN(valorDiaria) || isNaN(diaria)) {
+				alert('Valor inválido!');
+				reserva_quartos();
+				return;
+			}
+
+			var totalDiaria = valorDiaria * diaria;
+			alert('O valor de ' + diaria + ' dias de hospedagem é de R$' + totalDiaria.toFixed(2));
+
+			var nomeHospede = prompt('Informe o nome do hóspede: ');
+			var numQuarto = parseInt(prompt('Qual o número do quarto desejado? (1 - 20)'));
+
+			if (numQuarto < 1 || numQuarto > 20 || isNaN(numQuarto)) {
+				alert('Número de quarto inválido!');
+				reserva_quartos();
+				return;
+			}
+
+			if (quartosOcupados[numQuarto - 1]) {
+				alert('Quarto ocupado. Escolha outro.');
+				reserva_quartos();
+				return;
+			}
+
+			var confirmacao = confirm(nomeHospede + ', você confirma a hospedagem por ' + diaria + ' dias no quarto ' + numQuarto + ' por R$' + totalDiaria.toFixed(2) + '?');
+
+			if (confirmacao) {
+				quartosOcupados[numQuarto - 1] = true; // Marcando o quarto como ocupado
+				alert('Reserva efetuada para ' + nomeHospede);
+				inicio();
+			} else {
+				inicio();
+			}
+		}
+
+		function cadastro_hospedes() {
+			alert('- HOTEL SKYWALKER - CADASTRO DE HÓSPEDES');
+
+			var nomeHospede;
+			var idadeHospede;
+			var valorTotalDiarias = 0;
+
+
+			while (true) {
+				nomeHospede = prompt('Qual o nome do hóspede? (Digite "ENCERRAR" para encerrar o cadastro)');
+				if (nomeHospede.toUpperCase() === 'ENCERRAR') break;
+
+				idadeHospede = parseInt(prompt('Qual a idade do hóspede?'));
+				if (isNaN(idadeHospede) || idadeHospede < 0) {
+					alert('Idade inválida! Por favor, informe uma idade válida.');
+					continue;
+				}
+
+
+				var valorDiariaHospede = valorDiaria;
+
+				if (idadeHospede < 6) {
+					gratuidades++;
+					alert(nomeHospede + ' possui gratuidade.');
+					continue; 
+				} else if (idadeHospede > 60) {
+					meias++;
+					valorDiariaHospede /= 2;
+					alert(nomeHospede + ' paga metade do valor.');
+					continue;
+				} else {
+					
+					alert(nomeHospede + ' não recebe desconto ou gratuidade.');
+					continue;
+				}
+
+				totalHospedagens += valorDiariaHospede;
+				valorTotalDiarias += valorDiariaHospede;
+				hospedes.push(nomeHospede); // Adiciona o nome do hóspede ao array
+				alert(nomeHospede + ' cadastrado(a) com sucesso. Valor da diária: R$' + valorDiariaHospede.toFixed(2));
+			}
+
+			alert(nome + ', o valor total das hospedagens é: R$' + valorTotalDiarias.toFixed(2));
+
+			inicio();
+		}
+
+		function abastecer_carros() {
+			alert('HOTEL {HOTEL SKYWALKER} - ABASTECER');
+			inicio();
+		}
+
+		function erro() {
+			alert('Por favor, informe um número entre 1 e 4');
+			inicio();
+		}
+
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				alert('Muito obrigado e até logo, ' + nome);
+				window.close();
+			} else {
+				inicio();
+			}
+		}
+
+		boasvindas();
+		inicio();
+	</script>
+</body>
+
+</html>
