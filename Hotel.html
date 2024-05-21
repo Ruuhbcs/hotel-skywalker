@@ -39,49 +39,49 @@
             alert('Bem vindo ao Hotel Skywalker, ' + nome + ' é um prazer imenso ter você aqui!');
             var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Agendar Evento 5.) Sair'));
 
-            switch (escolha) {
-                case 1:
-                    reserva_quartos();
-                    break;
-                case 2:
-                    menuHospede();
-                    break;
-                case 3:
-                    cadastro_hospedes();
-                    break;
-                case 4:
-                    agendar_evento();
-                    break;
-                case 5:
-                    sair();
-                    break;
-                default:
-                    erro();
-                    break;
-            }
-        }
+			switch (escolha) {
+				case 1:
+					reserva_quartos();
+					break;
+				case 2:
+					menuHospede();
+				case 3:
+					cadastro_hospedes();
+					break;
+				case 4:
+					abastecer_carros();
+					break;
+				case 5:
+					sair();
+					break;
+				default:
+					erro();
+					break;
+			}
+		}
+
 
         function menuHospede() {
             var opcao = parseInt(prompt("Selecione uma opção: 1. Cadastrar - 2. Pesquisar - 3. Listar - 4. Sair"));
 
-            switch (opcao) {
-                case 1:
-                    cadastrarHospede();
-                    break;
-                case 2:
-                    pesquisarHospede();
-                    break;
-                case 3:
-                    listarHospedes();
-                    break;
-                case 4:
-                    alert("Até logo!");
-                    break;
-                default:
-                    alert("Opção inválida. Por favor, selecione uma opção válida.");
-                    menuHospede();
-            }
-        }
+			switch (opcao) {
+				case 1:
+					cadastrarHospede();
+					break;
+				case 2:
+					pesquisarHospede();
+					break;
+				case 3:
+					listarHospedes();
+					break;
+				case 4:
+					alert("Até logo!");
+					break;
+				default:
+					alert("Opção inválida. Por favor, selecione uma opção válida.");
+					menuHospede();
+			}
+		}
 
         function cadastrarHospede() {
             if (hospedes.length >= MAX_HOSPEDES) {
@@ -115,10 +115,12 @@
             inicio();
         }
 
-        function reserva_quartos() {
-            alert('HOTEL {HOTEL SKYWALKER} - RESERVA DE QUARTOS');
-            valorDiaria = parseFloat(prompt('Qual o valor padrão da diária?'));
-            var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
+		function reserva_quartos() {
+			alert('HOTEL {HOTEL SKYWALKER} - RESERVA DE QUARTOS');
+			inicio();
+			var quartos = Array(20).fill(false);
+			valorDiaria = parseFloat(prompt('Qual o valor padrão da diária?'));
+			var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
 
             if (valorDiaria <= 0 || diaria <= 0 || diaria > 30 || isNaN(valorDiaria) || isNaN(diaria)) {
                 alert('Valor inválido!');
@@ -256,18 +258,19 @@
             inicio();
         }
 
-        function sair() {
-            var confirma = confirm('Você deseja sair?');
-            if (confirma) {
-                alert('Muito obrigado e até logo, ' + nome);
-                window.close();
-            } else {
-                inicio();
-            }
-        }
+		function sair() {
+			var confirma = confirm('Você deseja sair?');
+			if (confirma) {
+				alert('Muito obrigado e até logo, ' + nome);
+				window.close();
+			} else {
+				inicio();
+			}
+		}
 
-        boasvindas();
-    </script>
+		boasvindas();
+		inicio();
+	</script>
 </body>
 
 </html>
