@@ -37,7 +37,7 @@
 
         function inicio() {
             alert('Bem vindo ao Hotel Skywalker, ' + nome + ' é um prazer imenso ter você aqui!');
-            var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Agendar Evento 5.) Sair'));
+            var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Agendar Evento 5.) Abastecer 6.)teste 7.) Sair'));
 
             switch (escolha) {
                 case 1:
@@ -52,6 +52,12 @@
                     agendar_evento();
                     break;
                 case 5:
+                    abastecer();
+                    break;
+                case 6:
+                    teste();
+                    break;
+                case 7:
                     sair();
                     break;
                 default:
@@ -294,6 +300,48 @@
                 alert("Reserva efetuada com sucesso.");
             } else {
                 alert("Reserva não efetuada.");
+            }
+        }
+
+        function abastecer() {
+            var acool1;
+            var gasolina1;
+            var alcool2;
+            var gasolina2;
+            var tanque = 42;
+
+            alcool1 = parseFloat(prompt("Qual o valor do álcool no posto Wayne Oil?"));
+            gasolina1 = parseFloat(prompt("Qual o valor da gasolina no posto Wayne Oil?"));
+            alcool2 = parseFloat(prompt("Qual o valor do álcool no posto Stark Petrol?"));
+            gasolina2 = parseFloat(prompt("Qual o valor da gasolina no posto Stark Petrol?"));
+
+            var custoAlcool1 = alcool1 * tanque;
+            var custoGasolina1 = gasolina1 * tanque;
+            var custoAlcool2 = alcool2 * tanque;
+            var custoGasolina2 = gasolina2 * tanque;
+
+            var precoWayne, combustivelWayne;
+            var precoStark, combustivelStark;
+
+            if (alcool1 <= gasolina1 * 0.7) {
+                precoWayne = alcool1;
+                combustivelWayne = "álcool";
+            } else {
+                precoWayne = gasolina1;
+                combustivelWayne = "gasolina";
+            }
+            if (alcool2 <= gasolina2 * 0.7) {
+                precoStark = alcool2;
+                combustivelStark = "álcool";
+            } else {
+                precoStark = gasolina2;
+                combustivelStark = "gasolina";
+            }
+
+            if (precoWayne < precoStark) {
+                alert(`É mais barato abastecer com ${combustivelWayne} no posto Wayne Oil.`);
+            } else {
+                alert(`É mais barato abastecer com ${combustivelStark} no posto Stark Petrol.`);
             }
         }
 
