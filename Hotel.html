@@ -17,6 +17,7 @@
         var meias = 0;
         var totalHospedagens = 0;
         var valorDiaria;
+        var orcamentos = [];
 
         function boasvindas() {
             alert('- BEM VINDO AO HOTEL SKYWALKER - Siga para fazer login.');
@@ -37,7 +38,7 @@
 
         function inicio() {
             alert('Bem vindo ao Hotel Skywalker, ' + nome + ' é um prazer imenso ter você aqui!');
-            var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Agendar Evento 5.) Abastecer 6.)teste 7.) Sair'));
+            var escolha = parseInt(prompt('Selecione uma opção: 1.) Reserva de Quartos 2.) Menu Hóspedes 3.) Cadastro de Hóspedes 4.) Agendar Evento 5.) Abastecer 6.)Manutenção Ar Condicionado 7.) Sair'));
 
             switch (escolha) {
                 case 1:
@@ -55,7 +56,7 @@
                     abastecer();
                     break;
                 case 6:
-                    teste();
+                    manutencao_ar_condicionado();
                     break;
                 case 7:
                     sair();
@@ -123,7 +124,6 @@
 
         function reserva_quartos() {
             alert('- HOTEL SKYWALKER - RESERVA DE QUARTOS');
-            inicio();
             var quartos = Array(20).fill(false);
             valorDiaria = parseFloat(prompt('Qual o valor padrão da diária?'));
             var diaria = parseInt(prompt('Quantas diárias serão necessárias?'));
@@ -205,6 +205,7 @@
         }
 
         function agendar_evento() {
+            alert('- HOTEL SKYWALKER - AGENDAR EVENTOS');
             var quantidadeConvidados = parseInt(prompt("Qual a quantidade de convidados para o evento?"));
 
             if (quantidadeConvidados > 350) {
@@ -304,6 +305,8 @@
         }
 
         function abastecer() {
+            alert('- HOTEL SKYWALKER - ABASTECER');
+
             var acool1;
             var gasolina1;
             var alcool2;
@@ -344,6 +347,49 @@
                 alert(`É mais barato abastecer com ${combustivelStark} no posto Stark Petrol.`);
             }
         }
+
+        function manutencao_ar_condicionado() {
+            alert('- HOTEL SKYWALKER - MANUTENÇÃO APARELHOS');
+
+            var nomeDaEmpresa;
+            var valorAparelho;
+            var quantidadeAparelho;
+            var porcentagemDesconto;
+            var aparelhoDesconto;
+
+            while (true) {
+                nomeDaEmpresa = String(prompt("Qual o nome da empresa?"));
+                valorAparelho = parseFloat(prompt("Qual o valor por aparelho?"));
+                quantidadeAparelho = parseInt(prompt("Qual a quantidade de aparelhos?"));
+                porcentagemDesconto = parseFloat(prompt("Qual a porcentagem de desconto?"));
+                aparelhoDesconto = parseInt(prompt("Qual o número mínimo de aparelhos para conseguir o desconto?"));
+
+                var valorTotal = valorAparelho * quantidadeAparelho;
+
+                if (quantidadeAparelho >= aparelhoDesconto) {
+                    var desconto = (valorTotal * porcentagemDesconto) / 100;
+                    valorTotal = valorTotal - desconto;
+
+                    orcamentos.push({ nome: nomeDaEmpresa, valor: valorTotal });
+
+                    alert("O serviço de " + nomeDaEmpresa + " custará R$ " + valorTotal.toFixed(2));
+
+                    var continuar = String(prompt("Deseja informar novos dados? (S/N)"));
+                    if (continuar.toUpperCase() === 'N') {
+                        var menorOrcamento = orcamentos[0];
+                        for (var i = 1; i < orcamentos.length; i++) {
+                            if (orcamentos[i].valor < menorOrcamento.valor) {
+                                menorOrcamento = orcamentos[i];
+                            }
+                        }
+
+                        alert("O orçamento de menor valor é o de " + menorOrcamento.nome + " por R$ " + menorOrcamento.valor.toFixed(2));
+                        break;
+                    }
+                }
+            }
+        }
+
 
         function erro() {
             alert('Por favor, informe um número entre 1 e 5');
